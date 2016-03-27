@@ -4,7 +4,7 @@
   "version": "1.0.1",
   "license": "GPL-3.0",
   "author": "Mike Williams <heymikewill@gmail.com> (http://mikewill.info)",
-  "homepage": "https://github.com/heymikewill/resumego/blob/master/README.md",
+  "homepage": "https://github.com/heymikewill/resumego",
   "repository": {
     "type": "git",
     "url": "https://github.com/heymikewill/resumego.git"
