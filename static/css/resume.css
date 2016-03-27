@@ -28,7 +28,7 @@ a {
     display: block; }
 
 .clear {
-  float: clear; }
+  clear: both; }
 
 .row {
   padding-right: 1em; }
