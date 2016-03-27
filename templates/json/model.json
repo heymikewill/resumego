@@ -1,55 +1,51 @@
 {
-    // Metadata for the resume, not public
-    "metadata": { // Dictionary
-        "keywords": [] // List
+    "metadata": {
+        "keywords": []
     },
-    
-    // Non-professional information
-    "info": { // Dictionary
-        "name": null, // String
-        "cast": null, // String
-        "email": null, // String
-        "phone": null, // String
-        "website": null, // String
-        "location": null, // String
+
+    "info": {
+        "name": null,
+        "cast": null,
+        "email": null,
+        "phone": null,
+        "website": null,
+        "location": null,
         
-        "profiles": [ // List
-            { // Dictionary
-                "network": null, // String
-                "url": null // String
+        "profiles": [
+            {
+                "network": null,
+                "url": null
             }
         ],
-        
-        "education": [  // List
-            { // Dictinary
-                "institution": null, // String
-                "degree": null, // String
-                "minor": null, // String
-                "start": null, // String
-                "end": null // String
+
+        "education": [ 
+            {
+                "institution": null,
+                "degree": null,
+                "minor": null,
+                "start": null,
+                "end": null
             }
         ] 
     },
-    
-    // Career experience
-    "positions": [ // List
-        { // Dictionary
-            "company": null, // String
-            "title": null, // String
-            "website": null, // String
-            "start": null, // String
-            "end": null, // String
-            "summary": null, // String
-            "highlights": [] // List
+
+    "positions": [
+        {
+            "company": null,
+            "title": null,
+            "website": null,
+            "start": null,
+            "end": null,
+            "summary": null,
+            "highlights": []
         }
     ],
-    
-    // Project involvement
-    "projects": [ // List
-        { // Dictionary
-            "name": null, // String
-            "languages": [], // List
-            "summary": null // String
+
+    "projects": [
+        {
+            "name": null,
+            "languages": [],
+            "summary": null
         }
     ]
 }
