@@ -33,34 +33,34 @@
                     <td class="property">"name"</td>
                     <td class="font-huge yellow">{{ info.name }}</td>
                 </tr>
-                <tr>
+                {% if info.cast %}<tr>
                     <td class="property">"cast"</td>
                     <td>{{ info.cast }}</td>
-                </tr>
-                <tr>
+                </tr>{% endif %}
+                {% if info.location %}<tr>
                     <td class="property">"location"</td>
                     <td>{{ info.location }}</td>
-                </tr>
+                </tr>{% endif %}
             </table>
         </div>
 
         <!-- Contact -->
         <div class="col-5 json">
             <table>
-                <tr>
+                {% if info.phone %}<tr>
                     <td class="property">"phone"</td>
                     <td>{{ info.phone }}</td>
-                </tr>
-                <tr>
+                </tr>{% endif %}
+                {% if info.email %}<tr>
                     <td class="property">"email"</td>
                     <td><a href="mailto:{{ info.email }}">{{ info.email }}</a></td>
-                </tr>
-                <tr>
+                </tr>{% endif %}
+                {% if info.profiles %}<tr>
                     <td class="property">"profiles"</td>
                     <td>{% for profile in info.profiles %}
                         <a href="{{ profile.url }}" target="_blank">{{ profile.network }}</a>
                     {% endfor %}</td>
-                </tr>
+                </tr>{% endif %}
             </table>
         </div>
     </div>
@@ -92,25 +92,25 @@
                     <td class="property">"start"</td>
                     <td>{{ position.start }}</td>
                 </tr>
-                <tr>
+                {% if position.end %}<tr>
                     <td class="property">"end"</td>
                     <td>{{ position.end }}</td>
-                </tr>
-                <tr>
+                </tr>{% endif %}
+
+                {% if position.website %}<tr>
                     <td class="property">"website"</td>
                     <td><a href="{{ position.website }}">{{ position.website }}</a></td>
-                </tr>
-
+                </tr>{% endif %}
                 <tr>
                     <td class="property">"summary"</td>
                     <td>{{ position.summary }}</td>
                 </tr>
-                <tr>
+                {% if position.highlights %}<tr>
                     <td class="property">"highlights"</td>
                     <td>{% for highlight in position.highlights %}
                         <span class="highlight">{{ highlight }}</span>
                     {% endfor %}</td>
-                </tr>
+                </tr>{% endif %}
             </table>
         </div>
 
@@ -132,35 +132,39 @@
             <div class="row">
                 {% for project in projects %}
                 <!-- Project -->
-                <div class="col-6 json">
+                <div class="col-6 json {% if loop.index % 2 %}clear{% endif %}">
                     <table>
                         <tr>
                             <td class="property">"project"</td>
                             <td class="font-medium red">{{ project.name }}</td>
                         </tr>
 
-                        <tr>
+                        {% if project.languages %}<tr>
                             <td class="property">"languages"</td>
                             <td>
                                 {% for language in project.languages %}
                                 {{ language }}{% if not loop.last %}, {% endif %}
                                 {% endfor %}
                             </td>
-                        </tr>
-
+                        </tr>{% endif %}
+                        
+                        {% if project.website %}<tr>
+                            <td class="property">"website"</td>
+                            <td><a href="{{ project.website }}">{{ project.website }}</a></td>
+                        </tr>{% endif %}
                         <tr>
                             <td class="property">"summary"</td>
                             <td>{{ project.summary }}</td>
                         </tr>
                     </table>
                 </div>
-
                 {% endfor %}
             </div>
         </div>
 
     </div>
     
+    {% if info.education %}
     <!-- Education -->
     <div class="row">
         <div class="col-11 json">
@@ -183,12 +187,13 @@
                     <td class="property">"degree"</td>
                     <td>{{ info.education.degree }}</td>
                 </tr>
-                <tr>
+                {% if info.education.minor %}<tr>
                     <td class="property">"minor"</td>
                     <td>{{ info.education.minor }}</td>
-                </tr>
+                </tr>{% endif %}
             </table>
         </div>
     </div>
+    {% endif %}
 </body>
 </html>

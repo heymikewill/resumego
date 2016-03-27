@@ -27,6 +27,9 @@ a {
   #raw-links .link-group {
     display: block; }
 
+.clear {
+  float: clear; }
+
 .row {
   padding-right: 1em; }
 
