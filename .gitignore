@@ -1,0 +1,7 @@
+bin/*
+obj/*
+typings/*
+node_modules/*
+.vscode/*
+.sass-cache/*
+.elasticbeanstalk/*

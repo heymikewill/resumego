@@ -1,0 +1,55 @@
+{
+    // Metadata for the resume, not public
+    "metadata": { // Dictionary
+        "keywords": [] // List
+    },
+    
+    // Non-professional information
+    "info": { // Dictionary
+        "name": null, // String
+        "cast": null, // String
+        "email": null, // String
+        "phone": null, // String
+        "website": null, // String
+        "location": null, // String
+        
+        "profiles": [ // List
+            { // Dictionary
+                "network": null, // String
+                "url": null // String
+            }
+        ],
+        
+        "education": [  // List
+            { // Dictinary
+                "institution": null, // String
+                "degree": null, // String
+                "minor": null, // String
+                "start": null, // String
+                "end": null // String
+            }
+        ] 
+    },
+    
+    // Career experience
+    "positions": [ // List
+        { // Dictionary
+            "company": null, // String
+            "title": null, // String
+            "website": null, // String
+            "start": null, // String
+            "end": null, // String
+            "summary": null, // String
+            "highlights": [] // List
+        }
+    ],
+    
+    // Project involvement
+    "projects": [ // List
+        { // Dictionary
+            "name": null, // String
+            "languages": [], // List
+            "summary": null // String
+        }
+    ]
+}

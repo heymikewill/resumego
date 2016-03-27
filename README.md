@@ -1,0 +1,1 @@
+Resumego is a modular, responsive, data-centric resume app written in Node.js, tasked with serving up the freshest resume possible. Keep it lean.

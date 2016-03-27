@@ -1,0 +1,68 @@
+body {
+  font: 85% "Inconsolata";
+  background-color: #262626;
+  color: #eaeaea;
+  min-width: 500px;
+  max-width: 100%;
+  padding-bottom: 3em; }
+
+a {
+  color: #eaeaea;
+  text-decoration: underline; }
+
+.font-huge {
+  font-size: 1.6em; }
+
+.font-large {
+  font-size: 1.4em; }
+
+.font-medium {
+  font-size: 1.2em; }
+
+#raw-links {
+  color: #66aaff;
+  padding: 0 1em; }
+  #raw-links a {
+    color: #fcfd97; }
+  #raw-links .link-group {
+    display: block; }
+
+.row {
+  padding-right: 1em; }
+
+.row + .row {
+  margin-top: 0;
+  padding-top: 1.5em; }
+
+.json {
+  margin-top: 0.5em; }
+  .json table {
+    background-color: inherit;
+    color: inherit;
+    margin: 0.25em; }
+    .json table td {
+      padding: 0.175em;
+      border: 0; }
+    .json table .property {
+      width: 8em;
+      text-align: right;
+      padding-right: 1em;
+      color: #66aaff; }
+    .json table .title {
+      font-weight: bold; }
+    .json table .highlight {
+      display: block; }
+    .json table .highlight + .highlight {
+      margin-top: 0.5em; }
+
+.green {
+  color: #89e894; }
+
+.red {
+  color: #fcb49b; }
+
+.yellow {
+  color: #fcfd97; }
+
+.notable {
+  color: #fcfd97; }

@@ -1,0 +1,101 @@
+$font-stack: "Inconsolata";
+
+$color-silver: #eaeaea;
+$color-graphite: #262626;
+$color-blue: #66aaff;
+$color-green: #89e894;
+$color-yellow: #fcfd97;
+$color-red: #fcb49b;
+
+
+body {
+    font: 85% $font-stack;
+    background-color: $color-graphite;
+    color: $color-silver;
+    min-width: 500px;
+    max-width: 100%;
+    padding-bottom: 3em;
+}
+
+a {
+    color: $color-silver;
+    text-decoration: underline;
+}
+
+.font-huge {
+    font-size: 1.6em;
+}
+.font-large {
+    font-size: 1.4em;
+}
+.font-medium {
+    font-size: 1.2em;
+}
+
+#raw-links {
+    color: $color-blue;
+    padding: 0 1em;
+
+    a {
+        color: $color-yellow;
+    }
+
+    .link-group {
+        display: block;
+    }
+}
+
+.row {
+    padding-right: 1em;
+}
+
+.row+.row {
+    margin-top: 0;
+    padding-top: 1.5em;
+}
+
+.json {
+    margin-top: 0.5em;
+
+    table {
+        background-color: inherit;
+        color: inherit;
+        margin: 0.25em;
+
+        td {
+            padding: 0.175em;
+            border: 0;
+        }
+        
+        .property {
+            width: 8em;
+            text-align: right;
+            padding-right: 1em;
+            color: $color-blue;
+        }
+        
+        .title {
+            font-weight: bold;
+        }
+
+        .highlight {
+            display: block;
+        }
+        .highlight+.highlight {
+            margin-top: 0.5em;
+        }
+    }
+}
+
+.green {
+    color: $color-green;
+}
+.red {
+    color: $color-red;
+}
+.yellow {
+    color: $color-yellow;
+}
+.notable {
+    color: $color-yellow;
+}

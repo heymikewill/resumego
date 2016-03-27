@@ -1,0 +1,24 @@
+{
+    "name": "resumego",
+    "description": "Modular, responsive, data-centric resume app written in Node.js",
+    "version": "1.0.0",
+    "license": "GPL-3.0",
+    "author": "Mike Williams <heymikewill@gmail.com> (http://mikewill.info)",
+    "homepage": "https://github.com/heymikewill/resumego/blob/master/README.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/heymikewill/resumego.git"
+    },
+    "main": "server.js",
+    "dependencies": {
+        "aws-sdk": "2.2.x",
+        "express": "3.x",
+        "swig": "^1.4.2"
+    },
+    "devDependencies": {
+        "node-sass": "3.x"
+    },
+    "scripts": {
+        "start": "node server.js"
+    }
+}
