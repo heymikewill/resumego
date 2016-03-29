@@ -176,22 +176,28 @@
             </table>
         </div>
 
-        <!-- School -->
-        <div class="col-10 offset-1 json">
-            <table>
-                <tr>
-                    <td class="property">"institution"</td>
-                    <td class="font-medium green">{{ info.education.institution }}</td>
-                </tr>
-                <tr>
-                    <td class="property">"degree"</td>
-                    <td>{{ info.education.degree }}</td>
-                </tr>
-                {% if info.education.minor %}<tr>
-                    <td class="property">"minor"</td>
-                    <td>{{ info.education.minor }}</td>
-                </tr>{% endif %}
-            </table>
+        <div class="col-10 offset-1">
+            <div class="row">
+                {% for record in info.education %}
+                <!-- Education -->
+                <div class="col-6 json {% if loop.index % 2 %}clear{% endif %}">
+                    <table>
+                        <tr>
+                            <td class="property">"institution"</td>
+                            <td class="font-medium green">{{ record.institution }}</td>
+                        </tr>
+                        <tr>
+                            <td class="property">"degree"</td>
+                            <td>{{ record.degree }}</td>
+                        </tr>
+                        {% if record.minor %}<tr>
+                            <td class="property">"minor"</td>
+                            <td>{{ record.minor }}</td>
+                        </tr>{% endif %}
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
     {% endif %}
