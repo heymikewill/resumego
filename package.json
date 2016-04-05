@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/heymikewill/resumego.git"
   },
-  "main": "server.js",
+  "main": "resumego.js",
   "dependencies": {
     "aws-sdk": "2.2.x",
     "express": "3.x",
@@ -17,8 +17,5 @@
   },
   "devDependencies": {
     "node-sass": "3.x"
-  },
-  "scripts": {
-    "start": "node server.js"
   }
 }

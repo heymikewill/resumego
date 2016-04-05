@@ -1,6 +1,6 @@
 var fs = require('fs')
 var path = require('path')
-var rootDir = path.dirname(require.main.filename)
+var rootDir = path.dirname(module.filename)
 var libDir = path.join(rootDir, 'lib')
 
 var aws = require(path.join(libDir, 'aws.js'))
