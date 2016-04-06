@@ -14,14 +14,35 @@ app.use(express.static(staticDir))
 var server = null
 var respond = require(path.join(libDir, 'respond.js'))
 
-// Start resumego
-function start(port, resume) {
-    if (typeof resume === 'undefined') {
-        app.get('/',  respond.routerGET)
-    } else {
-        respond.resume = resume
-        app.get('/',  respond.routerLocal)
+// Start resumego against an AWS account
+function startAWS(port, region, table) {
+    if (!region) {
+        console.error('No AWS region specified!')
+        return
+    } else if (!table) {
+        console.error('No DynamoDB table specified!')
+        return
     }
+    
+    respond.initAWS(region, table)
+    app.get('/',  respond.routerAWS)
+    
+    server = app.listen(port, function() {
+        var addr = server.address()
+        console.log('Serving up fresh ass resumes at http://%s:%s', addr.address, addr.port)
+    })
+}
+
+// Start resumego against a local resume
+function startLocal(port, resume) {
+    if (!resume) {
+        console.error('No resume file specified!')
+        return
+    }
+    
+    respond.resume = resume
+    app.get('/',  respond.routerLocal)
+    
     server = app.listen(port, function() {
         var addr = server.address()
         console.log('Serving up fresh ass resumes at http://%s:%s', addr.address, addr.port)
@@ -39,6 +60,7 @@ function stop() {
 
 // Specify module exports
 module.exports = {
-    start: start,
+    startAWS: startAWS,
+    startLocal: startLocal,
     stop: stop
 }

@@ -7,11 +7,11 @@ var aws = require(path.join(libDir, 'aws.js'))
 var manipulate = require(path.join(libDir, 'manipulate.js'))
 
 var commands = {
-    'bootstrap': ['Bootstrap', ''],
-    'retrieve': ['Retrieve', ''],
-    'update': ['Update', '<resume.json>'],
-    'minify': ['Minify', '<resume.json>'],
-    'pretty': ['Pretty', '<resume.json>']
+    'bootstrap': ['Bootstrap', ['<region>', '<table>']],
+    'retrieve': ['Retrieve', ['<region>', '<table>']],
+    'update': ['Update', ['<region>', '<table>', '<resume.json>']],
+    'minify': ['Minify', ['<resume.json>']],
+    'pretty': ['Pretty', ['<resume.json>']]
 }
 
 var tableParams = {
@@ -29,29 +29,25 @@ var tableParams = {
     }
 }
 
-// Print management usage
-function printUsage(command) {
-    if (commands[command])
-        console.error('%s usage: node manage.py %s %s',
-                      commands[command][0], command, commands[command][1])
-    else for (var cmd in commands)
-        console.log('%s usage: node manage.py %s %s',
-                      commands[cmd][0], cmd, commands[cmd][1])
-}
-
 // Create the required data table
-function createDataTable(callback) {
-    console.log('Creating data table')
+function createDataTable(region, table, callback) {
+    console.log('Creating data table "%s"', table)
+    tableParams.TableName = table
+    aws.setRegion(region)
     aws.createResumeDataTable(tableParams, callback)
 }
 
 // Save all sections of resume data
-function putAllSections(data) {
+function putAllSections(region, table, data) {
+    aws.setRegion(region)
     for (var section in data) {
-        var params = { Item: {
-            Section: { 'S': section },
-            Data: { 'S': JSON.stringify(data[section]) }
-        }}
+        var params = { 
+            TableName: table,
+            Item: {
+                Section: { 'S': section },
+                Data: { 'S': JSON.stringify(data[section]) }
+            }
+        }
 
         console.log('Putting section "%s"', section)
         aws.putResumeSection(params, function(err, data) {
@@ -61,9 +57,10 @@ function putAllSections(data) {
 }
 
 // Populate initial minimum data
-function bootstrapData() {
+function bootstrapData(region, table) {
     var model = manipulate.generateEmptyJSON()
-    aws.getResumeData(function(err, data) {
+    aws.setRegion(region)
+    aws.getResumeData(table, function(err, data) {
         if (err) {
             console.log('Hit an error while getting resume data')
             console.error(err.stack)
@@ -77,14 +74,14 @@ function bootstrapData() {
         })
 
         // Initialize remaining model
-        putAllSections(model)
+        putAllSections(table, model)
     })
 }
 
 // Get current raw JSON data
-function getCurrentData(callback) {
-    console.log('Getting current resume data')
-    aws.getResumeData(function(err, data) {
+function getCurrentData(region, table, callback) {
+    aws.setRegion(region)
+    aws.getResumeData(table, function(err, data) {
         if (err) {
             callback(err, null)
             return
@@ -114,9 +111,10 @@ function formatPretty(data) {
 }
 
 // Update raw JSON data
-function updateData(newData) {
+function updateData(region, table, newData) {
     var json = parseData(newData)
-    getCurrentData(function(err, data) {
+    aws.setRegion(region)
+    getCurrentData(table, function(err, data) {
         if (err) {
             console.error(err.stack)
             return
@@ -130,48 +128,57 @@ function updateData(newData) {
     })
 }
 
+// Print management usage
+function printUsage(command) {
+    if (commands[command])
+        console.log('%s usage: node manage.py %s %s',
+                      commands[command][0], command, commands[command][1].join(' '))
+    else for (var cmd in commands)
+        console.log('%s usage: node manage.py %s %s',
+                      commands[cmd][0], cmd, commands[cmd][1].join(' '))
+}
+
+// Check to see if args are valid
+function checkCommandArgs(args) {
+    var commandInfo = commands[args[0]]
+    if (!commandInfo) return false
+    if (args.length - 1 != commandInfo[1].length) return false
+    return true
+}
+
 // Main management logic
 var args = process.argv.slice(2)
-if (args.length < 1) printUsage()
-else switch (args[0]) {
+if (args.length < 1) {
+    printUsage()
+} else if (!checkCommandArgs(args)) {
+    printUsage(args[0])
+} else switch (args[0]) {
     case 'bootstrap':
-        createDataTable(function(err, data) {
+        createDataTable(args[1], args[2], function(err, data) {
             if (err && err.message.indexOf('Table already exists') > 1) console.error(err.stack)
-            else bootstrapData()
+            else bootstrapData(args[1], args[2])
         })
         break
 
     case 'retrieve':
-        getCurrentData(function(err, data) {
+        getCurrentData(args[1], args[2], function(err, data) {
             if (err) console.error(err.stack)
             else console.log(JSON.stringify(data))
         })
         break
 
     case 'minify':
-        if (!args[1]) {
-            printUsage('minify')
-            break
-        }
         console.log(formatMin(fs.readFileSync(args[1], 'utf8')))
         break
 
     case 'pretty':
-        if (!args[1]) {
-            printUsage('pretty')
-            break
-        }
         console.log(formatPretty(fs.readFileSync(args[1], 'utf8')))
         break
 
     case 'update':
-        if (!args[1]) {
-            printUsage('update')
-            break
-        }
-        updateData(fs.readFileSync(args[1], 'utf8'))
+        updateData(args[1], args[2], fs.readFileSync(args[3], 'utf8'))
         break
 
     default:
-        printUsage()
+        printUsage(args[0])
 }
