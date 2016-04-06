@@ -8,8 +8,8 @@ The model used for JSON parsing and resume structure can be found at `templates/
 
 Resume data can be pulled from a linked AWS account or a local JSON file that you specify.  To run resumego locally, simply pass in the filename of your JSON resume.  To link resumego to your AWS account, simply set up your AWS environment as you [normally would](https://aws.amazon.com/sdk-for-node-js/#Get_Started_Fast) via config files or environment variables, and pass in what region and table you want to use for DynamoDB.
 ```
-require('resumego').start(8080, 'resume.json') // Run against local file
-require('resumego').start(8080, 'us-west-2', 'ResumeData') // Run against AWS data
+require('resumego').startLocal(8080, 'resume.json') // Run against local file
+require('resumego').startAWS(8080, 'us-west-2', 'ResumeData') // Run against AWS data
 ```
 
 ### Resume Management
