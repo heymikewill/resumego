@@ -31,7 +31,10 @@ a {
   clear: both; }
 
 .row {
-  padding-right: 1em; }
+  max-width: 1200px;
+  padding-right: 1em;
+  margin-left: auto;
+  margin-right: auto; }
 
 .row + .row {
   margin-top: 0;
