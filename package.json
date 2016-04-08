@@ -11,8 +11,9 @@
   },
   "main": "resumego.js",
   "dependencies": {
-    "aws-sdk": "2.2.x",
-    "express": "3.x",
+    "async": "^1.5.2",
+    "aws-sdk": "^2.3.2",
+    "express": "^4.13.4",
     "swig": "^1.4.2"
   },
   "devDependencies": {

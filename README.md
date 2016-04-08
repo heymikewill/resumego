@@ -6,28 +6,54 @@ The model used for JSON parsing and resume structure can be found at `templates/
 
 ### Resume... Go!
 
-Resume data can be pulled from a linked AWS account or a local JSON file that you specify.  To run resumego locally, simply pass in the filename of your JSON resume.  To link resumego to your AWS account, simply set up your AWS environment as you [normally would](https://aws.amazon.com/sdk-for-node-js/#Get_Started_Fast) via config files or environment variables, and pass in what region and table you want to use for DynamoDB.
+Resume data can be pulled from a linked AWS account or a local JSON file that you specify.  To run resumego locally, simply use `startLocal` to pass in the filename of your JSON resume.  To link resumego to your AWS account, simply set up your AWS environment as you [normally would](https://aws.amazon.com/sdk-for-node-js/#Get_Started_Fast) via config files or environment variables, and use `startAWS` to pass in what region and table you want to use for DynamoDB.  To stop a resumego instance, use `stop`.
 ```
-require('resumego').startLocal(8080, 'resume.json') // Run against local file
-require('resumego').startAWS(8080, 'us-west-2', 'ResumeData') // Run against AWS data
-```
+var resumego = require('resumego')
 
-### Resume Management
+// Start a resumego server
+resumego.startLocal(8080, 'resume.json') // Local resume
+resumego.startAWS(8080, 'us-west-2', 'ResumeData') // AWS resume
 
-Management of resume data, especially relating to interaction with AWS, currently has no mystical easy module-level solution.  If you would like to take advantage of the management functions that are not yet incorporated with resumego on the module level, it is best to run from within resumego itself.
-```
-$ cd resumego
-$ node manage.js
-
-Bootstrap usage: node manage.py bootstrap <region> <table>
-Retrieve usage: node manage.py retrieve <region> <table>
-Update usage: node manage.py update <region> <table> <resume.json>
-Minify usage: node manage.py minify <resume.json>
-Pretty usage: node manage.py pretty <resume.json>
+// Stop current server
+resumego.stop()
 ```
 
-**bootstrap**: bootstrap a resume data table in a given AWS region.  
-**retrieve**: retrieve your current JSON resume data from AWS.  
-**update**: update your JSON resume data in AWS.  
-**minify**: parse a given JSON resume file and print out a minified version.  
-**pretty**: parse a given JSON resume file and print out a formatted version.  
+### Resume Parsing
+
+JSON resume data should be checked for proper parsing before being used with resumego.  Simply passing resume data through `JSON.parse` should be good enough for validity checking.
+```
+// Parse a JSON resume file
+require('fs').readFile('resume.json', 'utf-8', function(err, data) {
+    if (!err) console.log(JSON.stringify(JSON.parse(data))) // Minified
+    if (!err) console.log(JSON.stringify(JSON.parse(data), null, 4)) // Pretty
+})
+```
+
+### AWS Resume Management
+
+Management of AWS backed resume data is done easily through a few operations.  DynamoDB must be initialized through `bootstrapAWS`, which creates a given table and populates it with any relevant sections that are missing according to the JSON model.  Each section is a different row in a DynamoDB table to allow for optimized updates.  Updating AWS data can be done through `updateAWS`.  To simply see what JSON resume data AWS currently stores, run `getAWSData`.
+```
+var resumego = require('resumego')
+
+// Bootstrap AWS
+resumego.bootstrapAWS('us-west-2', 'ResumeData', function(err, results) {
+    if (!err) for (var section in results) {
+        console.log('Section "%s" bootstrapped: %s', section, results[section])
+    }
+})
+
+// Update AWS with contents of a local JSON resume
+require('fs').readFile('resume.json', 'utf-8', function(err, data) {
+    if (!err) resumego.updateAWS('us-west-2', 'ResumeData', data, function(err2, results) {
+        for (var section in results) {
+            console.log('Section "%s" updated: %s', section, results[section])
+        }
+    })
+})
+
+// Get current JSON data stored in AWS
+resumego.getAWSData('us-west-2', 'ResumeData', function(err, data) {
+    if (!err) console.log(data) // Default minified
+    if (!err) console.log(JSON.stringify(JSON.parse(data), null, 4))
+})
+``` 
