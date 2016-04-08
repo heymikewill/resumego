@@ -37,17 +37,17 @@ var resumego = require('resumego')
 
 // Bootstrap AWS
 resumego.bootstrapAWS('us-west-2', 'ResumeData', function(err, results) {
-    if (!err) for (var section in results) {
+    if (!err) Object.keys(results).forEach(function(section, index) {
         console.log('Section "%s" bootstrapped: %s', section, results[section])
-    }
+    })
 })
 
 // Update AWS with contents of a local JSON resume
 require('fs').readFile('resume.json', 'utf-8', function(err, data) {
     if (!err) resumego.updateAWS('us-west-2', 'ResumeData', data, function(err2, results) {
-        for (var section in results) {
+        Object.keys(results).forEach(function(section, index) {
             console.log('Section "%s" updated: %s', section, results[section])
-        }
+        })
     })
 })
 
