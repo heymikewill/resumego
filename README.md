@@ -7,7 +7,7 @@ The model used for JSON parsing and resume structure can be found at `templates/
 ### Resume... Go!
 
 Resume data can be pulled from a linked AWS account or a local JSON file that you specify.  To run resumego locally, simply use `startLocal` to pass in the filename of your JSON resume.  To link resumego to your AWS account, simply set up your AWS environment as you [normally would](https://aws.amazon.com/sdk-for-node-js/#Get_Started_Fast) via config files or environment variables, and use `startAWS` to pass in what region and table you want to use for DynamoDB.  To stop a resumego instance, use `stop`.
-```
+```javascript
 var resumego = require('resumego')
 
 // Start a resumego server
@@ -21,7 +21,7 @@ resumego.stop()
 ### Resume Parsing
 
 JSON resume data should be checked for proper parsing before being used with resumego.  Simply passing resume data through `JSON.parse` should be good enough for validity checking.
-```
+```javascript
 // Parse a JSON resume file
 require('fs').readFile('resume.json', 'utf-8', function(err, data) {
     if (!err) console.log(JSON.stringify(JSON.parse(data))) // Minified
@@ -32,7 +32,7 @@ require('fs').readFile('resume.json', 'utf-8', function(err, data) {
 ### AWS Resume Management
 
 Management of AWS backed resume data is done easily through a few operations.  DynamoDB must be initialized through `bootstrapAWS`, which creates a given table and populates it with any relevant sections that are missing according to the JSON model.  Each section is a different row in a DynamoDB table to allow for optimized updates.  Updating AWS data can be done through `updateAWS`.  To simply see what JSON resume data AWS currently stores, run `getAWSData`.
-```
+```javascript
 var resumego = require('resumego')
 
 // Bootstrap AWS
