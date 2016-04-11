@@ -16,15 +16,8 @@
     <title>{{ info.name }}</title>
 </head>
 <body class="dark-bg">
-    <!-- Swag banner -->
-    <div class="row">
-        <div id="raw-links" class="col-12 text-right-xsm text-right-sm text-right-md text-right-lg">
-            <a href="/?format=json">JSON</a> | <a href="/?format=xml">XML</a>
-        </div>
-    </div>
-
     <!-- Personal information -->
-    <div class="row">
+    <div class="row no-frills">
 
         <!-- Identification -->
         <div class="col-5 json">
@@ -61,6 +54,13 @@
                         <a href="{{ profile.url }}" target="_blank">{{ profile.network }}</a>
                     {% endfor %}</td>
                 </tr>{% endif %}
+                <tr>
+                    <td class="property">"formats"</td>
+                    <td>
+                        <a href="/?format=json">JSON</a>
+                        <a href="/?format=xml">XML</a>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>
@@ -166,7 +166,7 @@
     
     {% if info.education %}
     <!-- Education -->
-    <div class="row">
+    <div class="row no-frills">
         <div class="col-11 json">
             <table>
                 <tr>
@@ -179,7 +179,6 @@
         <div class="col-10 offset-1">
             <div class="row">
                 {% for record in info.education %}
-                <!-- Education -->
                 <div class="col-6 json {% if loop.index % 2 %}clear{% endif %}">
                     <table>
                         <tr>

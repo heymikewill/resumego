@@ -14,7 +14,7 @@ body {
     color: $color-silver;
     min-width: 500px;
     max-width: 100%;
-    padding-bottom: 3em;
+    padding-bottom: 2em;
 }
 
 a {
@@ -32,25 +32,13 @@ a {
     font-size: 1.2em;
 }
 
-#raw-links {
-    color: $color-blue;
-    padding: 0 1em;
-
-    a {
-        color: $color-yellow;
-    }
-
-    .link-group {
-        display: block;
-    }
-}
-
 .clear {
     clear: both;
 }
 
 .row {
     max-width: 1200px;
+    padding-top: 2em;
     padding-right: 1em;
     margin-left: auto;
     margin-right: auto;
@@ -105,4 +93,9 @@ a {
 }
 .notable {
     color: $color-yellow;
+}
+.no-frills {
+    .notable {
+        color: $color-silver !important;
+    }
 }
